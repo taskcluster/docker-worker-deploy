@@ -1,0 +1,4 @@
+{
+  "sslKeyLocation": "{{sslKeyLocation}}",
+  "papertrail": "{{papertrail}}"
+}

@@ -1,0 +1,27 @@
+{
+  "name": "docker-worker-deploy",
+  "version": "0.1.0",
+  "description": "Scripts to deploy docker-worker",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/taskcluster/docker-worker-deploy.git"
+  },
+  "author": "Wander Lairson Costa",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/taskcluster/docker-worker-deploy/issues"
+  },
+  "homepage": "https://github.com/taskcluster/docker-worker-deploy#readme",
+  "dependencies": {
+    "dateformat": "^3.0.3",
+    "github": "^14.0.0",
+    "json-templater": "^1.2.0",
+    "mime": "^2.4.4",
+    "mkdirp": "^1.0.4",
+    "tweetnacl": "^1.0.3"
+  }
+}
