@@ -84,6 +84,7 @@
       "source_ami":     "{{user `hvmSourceAMI`}}",
       "instance_type":  "m5.large",
       "ssh_username":   "ubuntu",
+      "ami_users":      ["710952102342"],
       "ami_name":       "taskcluster-docker-worker-{{timestamp}}",
       "tags": {
         "OS_Version":       "Ubuntu",
