@@ -9,9 +9,9 @@ if [ "$DOCKER_WORKER_GITHUB_TOKEN" == "" ]; then
   exit 1
 fi
 
-remote=$(git remote -v | grep 'taskcluster/docker-worker' | head -1 | awk '{print $1}')
+remote=$(git remote -v | grep 'taskcluster/docker-worker-deploy' | head -1 | awk '{print $1}')
 if [ "$remote" == "" ]; then
-  git remote add tcdw git@github.com/taskcluster/docker-worker
+  git remote add tcdw git@github.com/taskcluster/docker-worker-deploy
   remote=tcdw
 fi
 
