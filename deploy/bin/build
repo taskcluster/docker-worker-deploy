@@ -54,8 +54,8 @@ cmd_app() {
           # NOTE: if building a new base AMI, either generate for all of these
           # accounts, or comment out the accounts you have not updated so that
           # the next person is not surprised by using an old base
-          mozilla-taskcluster) hvmSourceAMI=ami-0714957760d5b7d84;;
-          taskcluster-aws-staging) hvmSourceAMI=ami-058348429895fb65f;;
+          mozilla-taskcluster) hvmSourceAMI=ami-0ee92e6a50cf7b22f;;
+          #taskcluster-aws-staging) hvmSourceAMI=ami-058348429895fb65f;;
           *)
               echo "No base AMI defined for AWS account $AWS_ACCOUNT; create one" >&2
               echo "  ./deploy/bin/build base" >&2
