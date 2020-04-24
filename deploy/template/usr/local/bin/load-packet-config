@@ -39,7 +39,7 @@ workerConfig:
     capacity: 4
 worker:
     implementation: docker-worker
-    path: /home/ubuntu/docker_worker
+    path: /home/ubuntu/docker-worker
     configPath: /home/ubuntu/worker.cfg
 '''
         )

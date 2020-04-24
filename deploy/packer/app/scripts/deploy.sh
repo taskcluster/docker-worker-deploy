@@ -33,12 +33,12 @@ sudo pip install python-statsd
 sudo tar xzf $template_source -C / --strip-components=1
 
 # install the node app.
-target=$HOME/docker_worker
-mkdir -p $target
-cd $target
-tar xzf $docker_worker_source -C $target
+target=$HOME/docker-worker
+cd $HOME
+tar xzf $docker_worker_source
 sudo npm install -g yarn@1.0.2
 sudo chown -R $USER:$USER /home/ubuntu/
+cd $target
 
 while ! yarn install --frozen-lockfile; do
     rm -rf node_modules
@@ -80,7 +80,7 @@ provider:
     providerType: $providerType
 worker:
     implementation: docker-worker
-    path: /home/ubuntu/docker_worker
+    path: /home/ubuntu/docker-worker
     configPath: /home/ubuntu/worker.cfg
 EOF"
 
@@ -95,7 +95,7 @@ docker save \
     taskcluster/livelog:v$livelog_version \
     taskcluster/dind-service:v$dind_service_version \
     taskcluster/relengapi-proxy:$relengapi_proxy_version \
-    > /home/ubuntu/docker_worker/docker_worker_images.tar
+    > /home/ubuntu/docker-worker/docker_worker_images.tar
 
 sudo bash -c 'cat > /lib/systemd/system/docker-worker.service <<EOF
 [Unit]
