@@ -11,14 +11,19 @@ if ! lvdisplay | grep instance_storage; then
     # Find instance storage devices
     # c5 and newer has nvme* devices. The nvmeN devices can't be used
     # with vgcreate. But nvmeNnN can.
-    rootdev=$(mount | grep '[^[:space:]]\+ on / ' | awk '{print $1}')
+    root_device=$(mount | grep " / " | awk '{print $1}')
     if [ -e /dev/nvme0 ]; then
-        rootdev=$(echo $rootdev | sed -e 's,\(/dev/nvme[0-9]\+\).*,\1,')
-        devices=$(ls /dev/nvme*n* | grep -v $rootdev)
+        # root device is /dev/nvme[0-9]
+        root_device=${root_device:0:10}
+        devices=$(ls -1 /dev/nvme*n* | grep -v "${root_device}")
     elif [ -e /dev/sdb ]; then
-        devices=$(ls /dev/sd* | grep -v '/dev/sda')
-    elif [ -e /dev/xvdb ]; then
-        devices=$(ls /dev/xvd* | grep -v '/dev/xvda')
+        # root device is /dev/sd[a-z]
+        root_device=${root_device:0:8}
+        devices=$(ls /dev/sd* | grep -v "${root_device}")
+    else
+        # root device is /dev/xvd[a-z]
+        root_device=${root_device:0:9}
+        devices=$(ls -1 /dev/xvd* | grep -v "${root_device}")
     fi
 
     if [ -z "${devices}" ]; then
@@ -40,7 +45,7 @@ if ! lvdisplay | grep instance_storage; then
     echo $devices | xargs vgcreate -y instance_storage
 
     # Create logical volume with all storage
-    lvcreate -y -l 100%VG -n all instance_storage
+    lvcreate -l 100%VG -n all instance_storage
 else
     echo "Logical volume 'instance_storage' already exists"
 fi
