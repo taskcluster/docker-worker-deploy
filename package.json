@@ -17,10 +17,9 @@
   },
   "homepage": "https://github.com/taskcluster/docker-worker-deploy#readme",
   "dependencies": {
+    "@octokit/rest": "^17.6.0",
     "dateformat": "^3.0.3",
-    "github": "^14.0.0",
     "json-templater": "^1.2.0",
-    "mime": "^2.4.4",
     "mkdirp": "^1.0.4",
     "tweetnacl": "^1.0.3"
   }
