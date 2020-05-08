@@ -74,11 +74,12 @@ $ cd ~/git/docker-worker
 $ vagrant up
 ```
 
-SSH into the machine, and initialise `/worker` directory:
+SSH into the machine, initialise `/worker` directory, and build the docker images locally:
 
 ```
 $ vagrant ssh
 $ cd /worker
+$ ./build.sh
 $ curl -o- -L https://yarnpkg.com/install.sh | bash
 $ exit
 $ vagrant ssh
