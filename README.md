@@ -39,13 +39,14 @@ Install vagrant on your system, and a virtualisation backend, such as Virtual Bo
 For example, on macOS:
 
 ```
-$ brew cask install vagrant
-$ brew cask install virtualbox
+$ brew install --cask vagrant
+$ brew install --cask virtualbox
 ```
 
 Install a vagrant provider plugin to match the backend you chose, and install the `vagrant-reload` plugin:
 
 ```
+$ vagrant plugin update
 $ vagrant plugin install virtualbox
 $ vagrant plugin install vagrant-reload
 ```
@@ -54,31 +55,33 @@ Install VirtualBox Guest Additions:
 
 ```
 $ vagrant plugin install vagrant-vbguest
-$ vagrant vbguest
-$ vagrant reload default
 ```
 
-Clone `docker-worker` and `docker-worker-deploy` as _sibling_ directories on your system, e.g.
+Clone `taskcluster`, and then clone `docker-worker-deploy` inside the `workers`
+directory so that `docker-worker-deploy` and `docker-worker` are _sibling_
+directories on your system, e.g.
 
 ```
-$ mkdir -p ~/git
-$ cd ~/git
-$ git clone git@github.com:taskcluster/docker-worker.git
+$ git clone git@github.com:taskcluster/taskcluster.git
+$ cd taskcluster/workers
 $ git clone git@github.com:taskcluster/docker-worker-deploy.git
 ```
 
 Bring up the vagrant machine:
 
 ```
-$ cd ~/git/docker-worker
+$ cd docker-worker
 $ vagrant up
+$ vagrant vbguest
+$ vagrant reload default
 ```
 
 SSH into the machine, initialise `/worker` directory, and build the docker images locally:
 
 ```
 $ vagrant ssh
-$ cd /worker
+$ cd /docker-worker-deploy
+$ ./vagrant.sh
 $ ./build.sh
 $ curl -o- -L https://yarnpkg.com/install.sh | bash
 $ exit
@@ -89,9 +92,10 @@ $ yarn install
 Export credentials for running integration tests:
 
 ```
+$ export TASKCLUSTER_ROOT_URL='......'
 $ export TASKCLUSTER_CLIENT_ID='......'
 $ export TASKCLUSTER_ACCESS_TOKEN='......'
-$ export TASKCLUSTER_ROOT_URL='......'
+$ export TASKCLUSTER_CERTIFICATE='......'   # not needed if using "permanent" credentials
 ```
 
 Run tests:
