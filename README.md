@@ -81,12 +81,32 @@ $ vagrant vbguest
 $ vagrant reload default
 ```
 
-SSH into the machine, initialise the `/docker-worker-deploy` directory, and build the docker images locally:
+SSH into the machine, initialise the `/docker-worker-deploy` directory, do some more vagrant setup(?)
 
 ```
 $ vagrant ssh
 $ cd /docker-worker-deploy
+```
+
+Maybe this has already run (see the `Vagrantfile` inside the
+`workers/docker-worker` directory of the taskcluster monorepo, but if you had
+any failures, you might need to run it again:
+
+```
 $ ./vagrant.sh
+```
+
+At some point I was asked if I would like to keep my existing `/etc/default/docker` or replace it
+with the version from apt package `docker-ce`. This may be because it took me several iterations to get things working, so this might not happen if things work first time. I chose to keep the version I had (option `O`)
+since from the diff, the package version looks like just comments, but the version on the file system contained the line:
+
+```
+DOCKER_OPTS="--storage-driver overlay2"
+```
+
+At this point you can hopefully build the docker image inside your vagrant VM:
+
+```
 $ ./build.sh
 $ curl -o- -L https://yarnpkg.com/install.sh | bash
 $ exit
