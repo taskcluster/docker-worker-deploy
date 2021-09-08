@@ -4,17 +4,21 @@ Building EC2 AMIs for docker-worker
 First of all, you need proper taskcluster credentials. You can use the
 [taskcluster-shell](https://github.com/taskcluster/taskcluster/clients/client-shell)
 tool to get it:
+
 ```sh
 # eval $(taskcluster signin)
 ```
+
 You also need the
 [Taskcluster team passwordstore repo](https://github.com/taskcluster/passwordstore-garbage)
 proper configured. Talk to :dustin to know how to get access to it.
 The deploy scripts require node version >= 12.11.0.
 With all these done, type:
+
 ```sh
 # ./deploy.sh <docker-worker source code path> <build target>
 ```
+
 To build docker-worker AMIs. The build target is either `app` or `base`. The base image
 is used to accelarate the process the more common app image. You can also tag a github
 release with:
@@ -34,7 +38,8 @@ and [community-tc-config](https://github.com/mozilla/community-tc-config) reposi
 Building under Vagrant
 ======================
 
-Install vagrant on your system, and a virtualisation backend, such as Virtual Box.
+Install vagrant on your system, and a virtualisation backend, such as Virtual
+Box.
 
 For example, on macOS:
 
@@ -43,7 +48,8 @@ $ brew install --cask vagrant
 $ brew install --cask virtualbox
 ```
 
-Install a vagrant provider plugin to match the backend you chose, and install the `vagrant-reload` plugin:
+Install a vagrant provider plugin to match the backend you chose, and install
+the `vagrant-reload` plugin:
 
 ```
 $ vagrant plugin update
@@ -81,7 +87,8 @@ $ vagrant vbguest
 $ vagrant reload default
 ```
 
-SSH into the machine, initialise the `/docker-worker-deploy` directory, do some more vagrant setup(?)
+SSH into the machine, initialise the `/docker-worker-deploy` directory, do some
+more vagrant setup(?)
 
 ```
 $ vagrant ssh
@@ -96,21 +103,39 @@ any failures, you might need to run it again:
 $ ./vagrant.sh
 ```
 
-At some point I was asked if I would like to keep my existing `/etc/default/docker` or replace it
-with the version from apt package `docker-ce`. This may be because it took me several iterations to get things working, so this might not happen if things work first time. I chose to keep the version I had (option `O`)
-since from the diff, the package version looks like just comments, but the version on the file system contained the line:
+At some point I was asked if I would like to keep my existing
+`/etc/default/docker` or replace it with the version from apt package
+`docker-ce`. This may be because it took me several iterations to get things
+working, so this might not happen if things work first time. I chose to keep
+the version I had (option `O`) since from the diff, the package version looks
+like just comments, but the version on the file system contained the line:
 
 ```
 DOCKER_OPTS="--storage-driver overlay2"
 ```
 
-At this point you can hopefully build the docker image inside your vagrant VM:
+The `build.sh` script isn't available inside the VM since it is in the
+`docker-worker` directory and not the `docker-worker-deploy` directory. A
+mistake? Surely you aren't meant to build the docker images directly on your
+host?
 
 ```
 $ ./build.sh
+```
+
+The next instruction said to install yarn as follows; I've no idea why this
+isn't part of the existing scripts.  Perhaps because it is only needed if you
+want to test, so isn't done by default? Presumably this should be done inside
+the VM, rather than on the host. If this isn't done already, maybe we can just
+add it to the existing scripts?
+
+```
 $ curl -o- -L https://yarnpkg.com/install.sh | bash
-$ exit
-$ vagrant ssh
+```
+
+Install required packages:
+
+```
 $ yarn install
 ```
 
