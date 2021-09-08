@@ -1,9 +1,9 @@
 Building EC2 AMIs for docker-worker
 ===================================
 
-First of all, you'll need taskcluster credentials with suitable scopes (TODO:
-find out which scopes, or ideally a single role, and document it/them here).
-You can use the
+You will need taskcluster credentials with suitable scopes (TODO: find out
+which scopes, or ideally a single role, and document it/them here).  You can
+use the
 [taskcluster-shell](https://github.com/taskcluster/taskcluster/clients/client-shell)
 tool to get them:
 
