@@ -1,22 +1,26 @@
 Building EC2 AMIs for docker-worker
 ===================================
 
-First of all, you need proper taskcluster credentials. You can use the
+First of all, you'll need taskcluster credentials with suitable scopes (TODO:
+find out which scopes, or ideally a single role, and document it/them here).
+You can use the
 [taskcluster-shell](https://github.com/taskcluster/taskcluster/clients/client-shell)
-tool to get it:
+tool to get them:
 
 ```sh
-# eval $(taskcluster signin)
+$ eval $(taskcluster signin)
 ```
 
-You also need the
-[Taskcluster team passwordstore repo](https://github.com/taskcluster/passwordstore-garbage)
-proper configured. Talk to :dustin to know how to get access to it.
-The deploy scripts require node version >= 12.11.0.
-With all these done, type:
+You also need the [Taskcluster team passwordstore
+repo](https://github.com/taskcluster/passwordstore-garbage) properly configured
+and installed on your system (TODO: presumably also the pass unix utility,
+rather than just a clone of the repo - update docs accordingly). The deploy
+scripts require node version >= 12.11.0.
+
+Execute the following command:
 
 ```sh
-# ./deploy.sh <docker-worker source code path> <build target>
+$ ./deploy.sh <docker-worker source code path> <build target>
 ```
 
 To build docker-worker AMIs. The build target is either `app` or `base`. The base image
@@ -24,15 +28,17 @@ is used to accelarate the process the more common app image. You can also tag a 
 release with:
 
 ```sh
-# ./release.sh
+$ ./release.sh
 ```
 
-To be able to do a Github release, you need a proper key stored in the environment
-variable `DOCKER_WORKER_GITHUB_TOKEN`.
+To be able to make a GitHub release, you'll need to set the environment
+variable `DOCKER_WORKER_GITHUB_TOKEN` with a suitable GitHub access token.
 
-The generate AMI IDs must be update in the
-[ci-configuration](https://hg.mozilla.org/ci/ci-configuration/)
-and [community-tc-config](https://github.com/mozilla/community-tc-config) repositories.
+In order for the docker-worker workers of the firefox-ci-tc and community-tc
+taskcluster deployments to use the newly generated AMIs, the repositories
+[ci-configuration](https://hg.mozilla.org/ci/ci-configuration/) and
+[community-tc-config](https://github.com/mozilla/community-tc-config) will need
+to be updated with the names of the newly generated AMIs.
 
 
 Building under Vagrant
