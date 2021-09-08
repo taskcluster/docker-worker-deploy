@@ -89,7 +89,7 @@ $ cd /docker-worker-deploy
 ```
 
 Maybe this has already run (see the `Vagrantfile` inside the
-`workers/docker-worker` directory of the taskcluster monorepo, but if you had
+`workers/docker-worker` directory of the taskcluster monorepo) but if you had
 any failures, you might need to run it again:
 
 ```
