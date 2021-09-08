@@ -51,7 +51,7 @@ $ vagrant plugin install virtualbox
 $ vagrant plugin install vagrant-reload
 ```
 
-Install VirtualBox Guest Additions:
+Install VirtualBox Guest Additions plugin:
 
 ```
 $ vagrant plugin install vagrant-vbguest
@@ -72,11 +72,16 @@ Bring up the vagrant machine:
 ```
 $ cd docker-worker
 $ vagrant up
+```
+
+Install the VirtualBox Guest Additions on the VM and restart it:
+
+```
 $ vagrant vbguest
 $ vagrant reload default
 ```
 
-SSH into the machine, initialise `/worker` directory, and build the docker images locally:
+SSH into the machine, initialise the `/docker-worker-deploy` directory, and build the docker images locally:
 
 ```
 $ vagrant ssh
